@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 6f88ad57966d72749a09f30e00fea65c
+  productGUID: 6dd94e5d2e3c0eb47829cfea30ed6379
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -680,12 +680,12 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 0
+  activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: edf264c4-1f45-4557-ba2d-87956483166a
+  cloudProjectId: fbebddd1-f74c-40aa-9d5d-a48923406b53
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: GlobalGameJam2026
+  projectName: GlobalGameJam2026 2026-01-30_22-05-36
   organizationId: fernofai
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
