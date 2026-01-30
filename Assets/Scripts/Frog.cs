@@ -1,62 +1,54 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 public class ArcJump : MonoBehaviour
 {
-    public Transform startPoint;
-    public Transform endPoint;
-    public float jumpHeight = 2.0f;
-    public float duration = 1.0f;
+    public float jumpHeight = 3.0f;
+    public float duration = 0.75f;
 
     public Transform[] petals;
+    public int offset = 0;
+
+    private int currentStep = 0;
+    private bool isJumping = false;
 
     private void Start()
     {
-        startPoint = petals[0];
-        endPoint = petals[0];
+        int startIndex = (offset + currentStep * 7) % 12;
+        transform.position = petals[startIndex].position;
     }
 
     void Update()
     {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame)
+        if (Keyboard.current[Key.Space].wasPressedThisFrame && !isJumping)
         {
-            List<Transform> tempPetals = new List<Transform>(petals);
+            int fromIndex = (offset + currentStep * 7) % 12;
+            currentStep++;
+            int toIndex = (offset + currentStep * 7) % 12;
 
-            Debug.Log(tempPetals.Count);
-
-            startPoint = endPoint;
-
-            tempPetals.Remove(startPoint);
-
-            endPoint = tempPetals[Random.Range(0, tempPetals.Count - 1)].transform;
-
-            StartCoroutine(JumpInArc());
+            StartCoroutine(JumpInArc(petals[fromIndex].position, petals[toIndex].position));
         }
     }
 
-    IEnumerator JumpInArc()
+    IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
     {
+        isJumping = true;
         float time = 0;
-        Vector3 startPos = startPoint.position;
-        Vector3 endPos = endPoint.position;
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            float linearT = time / duration; // 0 to 1
+            float linearT = time / duration;
 
-            // Horizontal linear interpolation
             Vector3 currentPos = Vector3.Lerp(startPos, endPos, linearT);
-
-            // Add arc height using a parabola: height * 4 * t * (1 - t)
             currentPos.y += Mathf.Sin(linearT * Mathf.PI) * jumpHeight;
 
             transform.position = currentPos;
             yield return null;
         }
 
-        transform.position = endPos; // Ensure precise end point
+        transform.position = endPos;
+        isJumping = false;
     }
 }
