@@ -1399,7 +1399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArcJump
   startPoint: {fileID: 1563547201}
   endPoint: {fileID: 1490749508}
-  jumpHeight: 2
+  jumpHeight: 3
   duration: 0.75
   petals:
   - {fileID: 1563547201}
