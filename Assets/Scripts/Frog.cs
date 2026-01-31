@@ -1,34 +1,72 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
 
 public class Frog : MonoBehaviour
 {
     public float jumpHeight = 3.0f;
     public float duration = 0.75f;
 
-    public Transform[] petals;
-    public int offset = 0;
-
-    private int currentStep = 0;
+    private Transform[] majorPetals;
+    private Transform[] minorPetals;
+    
+    private int[] path;
+    private int currentPathIndex = 0;
     private bool isJumping = false;
 
-    private void Start()
+    public bool IsJumping => isJumping;
+
+    public void Initialize(int[] assignedPath, Transform[] major, Transform[] minor)
     {
-        int startIndex = (offset + currentStep * 7) % 12;
-        // transform.position = petals[startIndex].position;
+        path = assignedPath;
+        majorPetals = major;
+        minorPetals = minor;
+        currentPathIndex = 0;
+
+        if (path != null && path.Length > 0)
+        {
+            Transform startPetal = GetPetalTransform(path[0]);
+            if (startPetal != null)
+            {
+                transform.position = startPetal.position;
+            }
+        }
     }
 
-    void Update()
+    private Transform GetPetalTransform(int noteIndex)
     {
-        /*if (Keyboard.current[Key.Space].wasPressedThisFrame && !isJumping)
+        if (noteIndex >= 12)
         {
-            int fromIndex = (offset + currentStep * 7) % 12;
-            currentStep++;
-            int toIndex = (offset + currentStep * 7) % 12;
+            int minorIndex = noteIndex - 12;
+            if (minorPetals != null && minorIndex < minorPetals.Length)
+            {
+                return minorPetals[minorIndex];
+            }
+        }
+        else
+        {
+            if (majorPetals != null && noteIndex < majorPetals.Length)
+            {
+                return majorPetals[noteIndex];
+            }
+        }
+        return null;
+    }
 
-            StartCoroutine(JumpInArc(petals[fromIndex].position, petals[toIndex].position));
-        }*/
+    public void JumpToPetal(int pathIndex)
+    {
+        if (isJumping || path == null) return;
+
+        int fromNoteIndex = path[currentPathIndex];
+        currentPathIndex = pathIndex;
+        int toNoteIndex = path[currentPathIndex];
+
+        Transform fromPetal = GetPetalTransform(fromNoteIndex);
+        Transform toPetal = GetPetalTransform(toNoteIndex);
+
+        if (fromPetal != null && toPetal != null)
+        {
+            StartCoroutine(JumpInArc(fromPetal.position, toPetal.position));
+        }
     }
 
     IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
