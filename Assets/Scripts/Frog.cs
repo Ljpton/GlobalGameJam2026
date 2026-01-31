@@ -40,6 +40,7 @@ public class ArcJump : MonoBehaviour
 
         float rotationDirection = endPos.x < startPos.x ? 1f : -1f;
         Quaternion startRotation = transform.rotation;
+        Vector3 originalScale = transform.localScale;
 
         while (time < duration)
         {
@@ -49,8 +50,38 @@ public class ArcJump : MonoBehaviour
             Vector3 currentPos = Vector3.Lerp(startPos, endPos, linearT);
             currentPos.y += Mathf.Sin(linearT * Mathf.PI) * jumpHeight;
 
-            float angle = linearT * 360f * rotationDirection;
-            transform.rotation = startRotation * Quaternion.Euler(0, 0, angle);
+            float spinT = Mathf.Pow(linearT, 0.6f);
+            float angle = spinT * 720f * rotationDirection;
+            float wobble = Mathf.Sin(linearT * Mathf.PI * 6f) * 15f * (1f - linearT);
+            transform.rotation = startRotation * Quaternion.Euler(0, 0, angle + wobble);
+
+            float squashStretch;
+            if (linearT < 0.15f)
+            {
+                float t = linearT / 0.15f;
+                squashStretch = Mathf.Lerp(1f, 0.5f, t);
+            }
+            else if (linearT < 0.5f)
+            {
+                float t = (linearT - 0.15f) / 0.35f;
+                squashStretch = Mathf.Lerp(0.5f, 1.4f, t);
+            }
+            else if (linearT < 0.85f)
+            {
+                float t = (linearT - 0.5f) / 0.35f;
+                squashStretch = Mathf.Lerp(1.4f, 0.6f, t);
+            }
+            else
+            {
+                float t = (linearT - 0.85f) / 0.15f;
+                squashStretch = Mathf.Lerp(0.6f, 1f, t);
+            }
+
+            transform.localScale = new Vector3(
+                originalScale.x / squashStretch,
+                originalScale.y * squashStretch,
+                originalScale.z
+            );
 
             transform.position = currentPos;
             yield return null;
@@ -58,6 +89,7 @@ public class ArcJump : MonoBehaviour
 
         transform.position = endPos;
         transform.rotation = startRotation;
+        transform.localScale = originalScale;
         isJumping = false;
     }
 }
