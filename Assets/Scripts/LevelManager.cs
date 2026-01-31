@@ -9,6 +9,9 @@ public class LevelManager : MonoBehaviour
     public GameObject princePrefab;
     public GameObject frogPrefab;
 
+    public GameObject majorPetals;
+    public GameObject minorPetals;
+
     public LevelData currentLevel;
 
     private List<Frog> frogs = new();
@@ -16,9 +19,16 @@ public class LevelManager : MonoBehaviour
     
     private int currentIndex = 0;
 
+    private bool isPlayingSequence = true;
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        InitLevel();
     }
 
     public void LoadLevel(LevelData level)
@@ -28,6 +38,27 @@ public class LevelManager : MonoBehaviour
 
     public void InitLevel()
     {
+        // Show petal corresponding petals (major, minor)
+        majorPetals.SetActive(false);
+        minorPetals.SetActive(false);
+
+        switch (currentLevel.levelDifficulty)
+        {
+            case Difficulties.SINGLE:
+                majorPetals.SetActive(true);
+                break;
+            case Difficulties.MAJOR:
+                majorPetals.SetActive(true);
+                break;
+            case Difficulties.MINOR:
+                minorPetals.SetActive(true);
+                break;
+            case Difficulties.MIXED:
+                majorPetals.SetActive(true);
+                minorPetals.SetActive(true);
+                break;
+        }
+
         // Create paths
         int[] princePath = currentLevel.GetPetalIndices();
         paths.Add(princePath);
@@ -40,7 +71,21 @@ public class LevelManager : MonoBehaviour
 
             for (int j = 0; j < pathLength; j++)
             {
-                randomPath[j] = Random.Range(0, 12); // Min incluse, max exclusive
+                switch (currentLevel.levelDifficulty)
+                {
+                    case Difficulties.SINGLE:
+                        randomPath[j] = Random.Range(0, 12); // Min incluse, max exclusive
+                        break;
+                    case Difficulties.MAJOR:
+                        randomPath[j] = Random.Range(0, 12); // Min incluse, max exclusive
+                        break;
+                    case Difficulties.MINOR:
+                        randomPath[j] = Random.Range(13, 24); // Min incluse, max exclusive
+                        break;
+                    case Difficulties.MIXED:    
+                        randomPath[j] = Random.Range(0, 24); // Min incluse, max exclusive
+                        break;
+                }
             }
 
             paths.Add(randomPath);
@@ -58,10 +103,15 @@ public class LevelManager : MonoBehaviour
 
         // Set frogs to starting petal
         // TODO
+
+        isPlayingSequence = true;
+        Forward();
     }
 
     public void Forward()
     {
+        Debug.Log("Forward");
+
         currentIndex += 1;
         if(currentIndex >= paths[0].Length)
         {
@@ -72,6 +122,9 @@ public class LevelManager : MonoBehaviour
         {
             // frog.JumpToPetal(currentIndex);
         }
+
+        // Play music
+        AudioManager._instance.PlaySequence(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
     }
 
     public void Backward()
@@ -99,5 +152,13 @@ public class LevelManager : MonoBehaviour
         paths.Clear();
 
         currentIndex = 0;
+    }
+
+    public void AskForNextStep()
+    {
+        if(isPlayingSequence)
+        {
+            Forward();
+        }
     }
 }

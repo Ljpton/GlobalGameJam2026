@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
+    public static AudioManager _instance;
     [SerializeField] private AudioClip[] piano_singleNote;
     [SerializeField] private AudioClip[] piano_major_singleChord;
     [SerializeField] private AudioClip[] piano_major_ChordProgression;
@@ -30,25 +30,27 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySequence(Notes id, Difficulties difficulty)
     {
+        Debug.Log("Playing Sequence");
+
         switch (difficulty)
         {
             case Difficulties.SINGLE:
                 musicSource.PlayOneShot(piano_singleNote[(int)id], MusicVolume);
                 break;
             case Difficulties.MAJOR:
-                musicSource.PlayOneShot(piano_major_singleChord[(int)id], MusicVolume);
+                musicSource.PlayOneShot(piano_major_ChordProgression[(int)id], MusicVolume);
                 break;
             case Difficulties.MINOR:
-                musicSource.PlayOneShot(piano_minor_singleChord[((int)id - 12)], MusicVolume);
+                musicSource.PlayOneShot(piano_minor_ChordProgression[((int)id - 12)], MusicVolume);
                 break;
             case Difficulties.MIXED:
                 if ((int)id >= 12)
                 {
-                    musicSource.PlayOneShot(piano_minor_singleChord[((int)id - 12)], MusicVolume);
+                    musicSource.PlayOneShot(piano_minor_ChordProgression[((int)id - 12)], MusicVolume);
                 }
                 else
                 {
-                    musicSource.PlayOneShot(piano_major_singleChord[(int)id], MusicVolume);
+                    musicSource.PlayOneShot(piano_major_ChordProgression[(int)id], MusicVolume);
                 }
                 break;
         }
@@ -61,9 +63,12 @@ public class AudioManager : MonoBehaviour
     {
         while (musicSource.isPlaying)
         {
+            Debug.Log("Waiting");
             yield return null;
         }
-        //LevelManager.Instance.AskForNextStep()
+
+        Debug.Log("Ask for next step");
+        LevelManager.Instance.AskForNextStep();
     }
 
     public void PlaySingle(Notes id, Difficulties difficulty)

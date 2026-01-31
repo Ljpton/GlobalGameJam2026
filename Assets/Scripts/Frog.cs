@@ -16,22 +16,20 @@ public class Frog : MonoBehaviour
     private void Start()
     {
         int startIndex = (offset + currentStep * 7) % 12;
-        transform.position = petals[startIndex].position;
+        // transform.position = petals[startIndex].position;
     }
 
     void Update()
     {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame && !isJumping)
+        /*if (Keyboard.current[Key.Space].wasPressedThisFrame && !isJumping)
         {
             int fromIndex = (offset + currentStep * 7) % 12;
             currentStep++;
             int toIndex = (offset + currentStep * 7) % 12;
 
             StartCoroutine(JumpInArc(petals[fromIndex].position, petals[toIndex].position));
-        }
+        }*/
     }
-
-
 
     IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
     {
