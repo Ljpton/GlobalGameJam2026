@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 
-public class ArcJump : MonoBehaviour
+public class Frog : MonoBehaviour
 {
     public float jumpHeight = 3.0f;
     public float duration = 0.75f;

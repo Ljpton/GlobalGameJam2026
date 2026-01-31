@@ -2,10 +2,12 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "LevelData", menuName = "Iron Henry/LevelData")]
 public class LevelData : ScriptableObject
 {
     public Notes[] notes;
     public Difficulties levelDifficulty;
+    public int frogCount = 1;
 
     private List<int> petalIndices => CalculatePetalIndicesFromNotes();
 
@@ -19,6 +21,11 @@ public class LevelData : ScriptableObject
         }
 
         return petalIndices;
+    }
+
+    public int[] GetPetalIndices()
+    {
+        return petalIndices.ToArray();
     }
 }
 
@@ -40,5 +47,5 @@ public enum Notes
 
 public enum Difficulties
 {
-    SINGLE, CHORD 
+    SINGLE, MAJOR, MINOR, MIXED 
 }
