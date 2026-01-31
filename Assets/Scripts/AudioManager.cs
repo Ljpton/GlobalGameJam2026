@@ -4,13 +4,28 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager _instance;
+    [Header("Piano Samples")]
     [SerializeField] private AudioClip[] piano_singleNote;
     [SerializeField] private AudioClip[] piano_singleProgression;
     [SerializeField] private AudioClip[] piano_major_singleChord;
     [SerializeField] private AudioClip[] piano_major_ChordProgression;
     [SerializeField] private AudioClip[] piano_minor_singleChord;
     [SerializeField] private AudioClip[] piano_minor_ChordProgression;
+    [Header("Guitar Samples")]
+    [SerializeField] private AudioClip[] guitar_major_singleChord;
+    [SerializeField] private AudioClip[] guitar_major_ChordProgression;
+    [SerializeField] private AudioClip[] guitar_minor_singleChord;
+    [SerializeField] private AudioClip[] guitar_minor_ChordProgression;
+    
+    [SerializeField] private AudioClip percussion;
+    [SerializeField] private AudioClip[] bass_singleNote;
+    
+    [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource percussionSource;
+    [SerializeField] private AudioSource bassSource;
+    [SerializeField] private AudioSource guitarSource;
+    [SerializeField] private AudioSource strummingSource;
     [SerializeField] private AudioSource sfxSource;
 
     [Header("Mixing")]
@@ -93,6 +108,46 @@ public class AudioManager : MonoBehaviour
                 else
                 {
                     musicSource.PlayOneShot(piano_major_singleChord[(int)id], MusicVolume);
+                }
+                break;
+        }
+    }
+
+    public void PlaySong(Notes id, Difficulties difficulty)
+    {
+        switch (difficulty)
+        {
+            case Difficulties.SINGLE:
+                musicSource.PlayOneShot(piano_singleNote[(int)id], MusicVolume);
+                percussionSource.PlayOneShot(percussion, MusicVolume);
+                bassSource.PlayOneShot(bass_singleNote[(int)id], MusicVolume);
+                break;
+            case Difficulties.MAJOR:
+                guitarSource.PlayOneShot(guitar_major_singleChord[(int)id], MusicVolume);
+                strummingSource.PlayOneShot(guitar_major_ChordProgression[(int)id], MusicVolume);
+                percussionSource.PlayOneShot(percussion, MusicVolume);
+                bassSource.PlayOneShot(bass_singleNote[(int)id], MusicVolume);
+                break;
+            case Difficulties.MINOR:
+                guitarSource.PlayOneShot(guitar_minor_singleChord[((int)id - 12)], MusicVolume);
+                strummingSource.PlayOneShot(guitar_minor_ChordProgression[((int)id - 12)], MusicVolume);
+                percussionSource.PlayOneShot(percussion, MusicVolume);
+                bassSource.PlayOneShot(bass_singleNote[((int)id - 12)], MusicVolume);
+                break;
+            case Difficulties.MIXED:
+                if ((int)id >= 12)
+                {
+                    guitarSource.PlayOneShot(guitar_minor_singleChord[((int)id - 12)], MusicVolume);
+                    strummingSource.PlayOneShot(guitar_minor_ChordProgression[((int)id - 12)], MusicVolume);
+                    percussionSource.PlayOneShot(percussion, MusicVolume);
+                    bassSource.PlayOneShot(bass_singleNote[((int)id - 12)], MusicVolume);
+                }
+                else
+                {
+                    guitarSource.PlayOneShot(guitar_major_singleChord[(int)id], MusicVolume);
+                    strummingSource.PlayOneShot(guitar_major_ChordProgression[(int)id], MusicVolume);
+                    percussionSource.PlayOneShot(percussion, MusicVolume);
+                    bassSource.PlayOneShot(bass_singleNote[(int)id], MusicVolume);
                 }
                 break;
         }
