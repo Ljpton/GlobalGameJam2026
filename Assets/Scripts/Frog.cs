@@ -31,10 +31,15 @@ public class ArcJump : MonoBehaviour
         }
     }
 
+
+
     IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
     {
         isJumping = true;
         float time = 0;
+
+        float rotationDirection = endPos.x < startPos.x ? 1f : -1f;
+        Quaternion startRotation = transform.rotation;
 
         while (time < duration)
         {
@@ -44,11 +49,15 @@ public class ArcJump : MonoBehaviour
             Vector3 currentPos = Vector3.Lerp(startPos, endPos, linearT);
             currentPos.y += Mathf.Sin(linearT * Mathf.PI) * jumpHeight;
 
+            float angle = linearT * 360f * rotationDirection;
+            transform.rotation = startRotation * Quaternion.Euler(0, 0, angle);
+
             transform.position = currentPos;
             yield return null;
         }
 
         transform.position = endPos;
+        transform.rotation = startRotation;
         isJumping = false;
     }
 }
