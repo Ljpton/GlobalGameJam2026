@@ -5,6 +5,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager _instance;
     [SerializeField] private AudioClip[] piano_singleNote;
+    [SerializeField] private AudioClip[] piano_singleProgression;
     [SerializeField] private AudioClip[] piano_major_singleChord;
     [SerializeField] private AudioClip[] piano_major_ChordProgression;
     [SerializeField] private AudioClip[] piano_minor_singleChord;
@@ -35,7 +36,7 @@ public class AudioManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulties.SINGLE:
-                musicSource.PlayOneShot(piano_singleNote[(int)id], MusicVolume);
+                musicSource.PlayOneShot(piano_singleProgression[(int)id], MusicVolume);
                 break;
             case Difficulties.MAJOR:
                 musicSource.PlayOneShot(piano_major_ChordProgression[(int)id], MusicVolume);
