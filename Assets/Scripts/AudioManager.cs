@@ -50,6 +50,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySequence(Notes id, Difficulties difficulty)
     {
+        if (musicSource.isPlaying) musicSource.Stop();
+
         switch (difficulty)
         {
             case Difficulties.SINGLE:

@@ -8,7 +8,6 @@ public class Frog : MonoBehaviour
     public float jumpHeight = 3.0f;
     public float duration = 0.75f;
 
-    private int currentStep = 0;
     private bool isJumping = false;
 
     private Transform lastPos;
@@ -38,6 +37,8 @@ public class Frog : MonoBehaviour
         if (LevelManager.Instance.levelWon) return;
 
         Debug.Log("Frog clicked!");
+
+        LevelManager.Instance.TogglePlaybackPanel(false);
 
         lastPos = transform;
         lastColor = spriteRenderer.color;
@@ -88,6 +89,11 @@ public class Frog : MonoBehaviour
         if(!CompareTag("Prince"))
         {
             spriteRenderer.color = lastColor;
+            LevelManager.Instance.TogglePlaybackPanel(true);
+        }
+        else
+        {
+            LevelManager.Instance.ToggleNextLevelPanel(true);
         }
 
         LevelManager.Instance.StartAutoplay(); // For now
@@ -102,8 +108,7 @@ public class Frog : MonoBehaviour
     {
         if(isJumping)
         {
-            Debug.Log("Jump call was ignored because frog is already jumping.");
-            return;
+            StopAllCoroutines();   
         }
 
         StartCoroutine(JumpInArc(transform.position, target.position));
