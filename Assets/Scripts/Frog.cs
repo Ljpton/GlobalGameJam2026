@@ -5,15 +5,24 @@ using Unity.VisualScripting;
 
 public class Frog : MonoBehaviour
 {
+    public static bool frogIsSelected = false;
+
     public float jumpHeight = 3.0f;
     public float duration = 0.75f;
 
     private bool isJumping = false;
 
+    private Color[] randomColors =
+    {
+        new Color(0.376f, 0.949f, 0.2f),
+        new Color(0.66f, 0.949f, 0.2f),
+        new Color(0.2f, 0.949f, 0.567f),
+        new Color(0.2f, 0.949f, 0.266f)
+    };
+
     private Transform lastPos;
     Color lastColor;
 
-    private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     public Sprite princeSprite;
@@ -23,18 +32,20 @@ public class Frog : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        Frog.frogIsSelected = false;
+
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
-    void Update()
-    {
-
+        spriteRenderer.color = randomColors[Random.Range(0, randomColors.Length)];
     }
 
     private void OnMouseDown()
     {
         if (LevelManager.Instance.levelWon) return;
+
+        if (Frog.frogIsSelected) return;
+
+        Frog.frogIsSelected = true;
 
         LevelManager.Instance.TogglePlaybackPanel(false);
 
@@ -58,6 +69,7 @@ public class Frog : MonoBehaviour
     {
         if (CompareTag("Prince"))
         {
+            AudioManager._instance.PlayPrinceWin();
             Debug.Log("You won!");
 
             spriteRenderer.sprite = princeSprite;
@@ -66,14 +78,11 @@ public class Frog : MonoBehaviour
             jumpingSprite = princeSprite;
 
             LevelManager.Instance.OnLevelWon();
-
-            // Play full song and then finish level
         }
         else
         {
+            AudioManager._instance.PlayFrogLose();
             Debug.Log("Wrong frog :(");
-            // Play frog sound
-            // Or turn into random sprite
         }
 
         Invoke(nameof(RevealEnd), 2);
@@ -94,6 +103,7 @@ public class Frog : MonoBehaviour
             LevelManager.Instance.ToggleNextLevelPanel(true);
         }
 
+        Frog.frogIsSelected = false;
         LevelManager.Instance.StartAutoplay(); // For now
     }
 

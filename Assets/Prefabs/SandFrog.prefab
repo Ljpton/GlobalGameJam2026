@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6909264598735197462}
   - component: {fileID: 3682876664425759633}
   - component: {fileID: 871532517009754372}
-  - component: {fileID: 3300066303932403570}
   m_Layer: 0
   m_Name: SandFrog
   m_TagString: Untagged
@@ -111,25 +110,3 @@ MonoBehaviour:
   notPrinceSprite: {fileID: 1874717902785127908, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
   idleSprite: {fileID: 1874717902785127908, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
   jumpingSprite: {fileID: 5393027540581306495, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
---- !u!95 &3300066303932403570
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5609675333086282902}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ef096220de8afa64a9917eff7e76b9b4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
