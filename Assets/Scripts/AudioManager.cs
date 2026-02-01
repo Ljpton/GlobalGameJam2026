@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] piano_minor_singleChord;
     [SerializeField] private AudioClip[] piano_minor_ChordProgression;
     [Header("Guitar Samples")]
+    [SerializeField] private AudioClip[] guitar_singleNote;
+    [SerializeField] private AudioClip[] guitar_singleProgression;
     [SerializeField] private AudioClip[] guitar_major_singleChord;
     [SerializeField] private AudioClip[] guitar_major_ChordProgression;
     [SerializeField] private AudioClip[] guitar_minor_singleChord;
@@ -51,8 +53,8 @@ public class AudioManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulties.SINGLE:
-                musicSource.PlayOneShot(piano_singleProgression[(int)id], MusicVolume);
-                guitarSource.PlayOneShot(guitar_major_singleChord[((int)id - 12)], MusicVolume);
+                musicSource.PlayOneShot(guitar_singleProgression[(int)id], MusicVolume);
+                guitarSource.PlayOneShot(guitar_major_ChordProgression[(int)id], MusicVolume);
                 break;
             case Difficulties.MAJOR:
                 musicSource.PlayOneShot(guitar_major_ChordProgression[(int)id], MusicVolume);
@@ -104,7 +106,7 @@ public class AudioManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulties.SINGLE:
-                musicSource.PlayOneShot(piano_singleNote[(int)id], MusicVolume);
+                musicSource.PlayOneShot(guitar_singleNote[(int)id], MusicVolume);
                 break;
             case Difficulties.MAJOR:
                 musicSource.PlayOneShot(guitar_major_singleChord[(int)id], MusicVolume);
@@ -131,7 +133,8 @@ public class AudioManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulties.SINGLE:
-                musicSource.PlayOneShot(piano_singleNote[(int)id], MusicVolume);
+                musicSource.PlayOneShot(guitar_singleProgression[(int)id], MusicVolume);
+                guitarSource.PlayOneShot(guitar_major_ChordProgression[(int)id], MusicVolume);
                 bassSource.PlayOneShot(bass_singleNote[(int)id], MusicVolume);
                 break;
             case Difficulties.MAJOR:

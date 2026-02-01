@@ -902,6 +902,32 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8f2d05612af53824e91a24226d4e9384, type: 3}
   - {fileID: 8300000, guid: 1b50791c993b2154f8078061e06059e6, type: 3}
   - {fileID: 8300000, guid: a078b73e28e46294fbeee65a43d64f37, type: 3}
+  guitar_singleNote:
+  - {fileID: 8300000, guid: 7e7a657aa29c55b4ba83de89f213ba71, type: 3}
+  - {fileID: 8300000, guid: df8d05003b168dc48bd4864fac882cba, type: 3}
+  - {fileID: 8300000, guid: 2fdccd0f0ce406948a48c69bdc0e316d, type: 3}
+  - {fileID: 8300000, guid: 18cb34fb8d3c2ea4cbc3cb7e2326ee38, type: 3}
+  - {fileID: 8300000, guid: da4067f2fa72e59498343565373d4a84, type: 3}
+  - {fileID: 8300000, guid: 6489e747648f66640a751a7766ad69a4, type: 3}
+  - {fileID: 8300000, guid: c64e49da6a0303b4097451146d246bc1, type: 3}
+  - {fileID: 8300000, guid: 304a2bb139a8ed845ab501374434ac1c, type: 3}
+  - {fileID: 8300000, guid: f6adb93b647cbe04ba43e5ac02542f75, type: 3}
+  - {fileID: 8300000, guid: a45857f1e2d5a634abb7c185976c73d3, type: 3}
+  - {fileID: 8300000, guid: d87dc09e621940b40b13e55ab4b47a58, type: 3}
+  - {fileID: 8300000, guid: bcb84777500a4dd46832d5e9f9cf8d88, type: 3}
+  guitar_singleProgression:
+  - {fileID: 8300000, guid: 7d0e2ac8cf38aae41b53db77b928a8e5, type: 3}
+  - {fileID: 8300000, guid: 6c4a0046a0873ae40bfe663507014215, type: 3}
+  - {fileID: 8300000, guid: 91b9f99d005da984a856f0e085fd1c55, type: 3}
+  - {fileID: 8300000, guid: b88885ef51301f94b801519f117f6e58, type: 3}
+  - {fileID: 8300000, guid: e53513d2d7906c74bb8a824850cfb1ed, type: 3}
+  - {fileID: 8300000, guid: 170f25e94862bcf4c98c1f90dbd917ac, type: 3}
+  - {fileID: 8300000, guid: 46c38ab34509d724cb1248b06f5bca28, type: 3}
+  - {fileID: 8300000, guid: 7261f5d7333061a409ac10247d96e2fc, type: 3}
+  - {fileID: 8300000, guid: ec372c18b18829846992bd925914d715, type: 3}
+  - {fileID: 8300000, guid: 99052795ddd9e7a49a98ea09d8257ac9, type: 3}
+  - {fileID: 8300000, guid: a4ec9a69fcc269442973f02a9028a06a, type: 3}
+  - {fileID: 8300000, guid: edf91aeebf8a923418d0e0b81709427d, type: 3}
   guitar_major_singleChord:
   - {fileID: 8300000, guid: 6e3db905b9cf30749bf785054639d185, type: 3}
   - {fileID: 8300000, guid: 402af7775b17e8840a3376e2937b6aee, type: 3}
