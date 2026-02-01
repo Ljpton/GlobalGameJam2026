@@ -1,10 +1,18 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+
+    public GameObject nextLevelPanel;
+    public GameObject playbackPanel;
+
+    public Image playButtonImage; 
+    public Sprite stopImage;
+    public Sprite playImage;
 
     public GameObject princePrefab;
     public GameObject frogPrefab;
@@ -58,6 +66,8 @@ public class LevelManager : MonoBehaviour
     public void InitLevel()
     {
         levelWon = false;
+        nextLevelPanel.SetActive(false);
+        playbackPanel.SetActive(true);
 
         // Show petal corresponding petals (major, minor)
         majorPetals.SetActive(false);
@@ -183,6 +193,18 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void ToggleAutoPlay()
+    {
+        if (isPlayingSequence)
+        {
+            StopAutoplay();
+        }
+        else
+        {
+            StartAutoplay();
+        }
+    }
+
     public void Backward()
     {
         StopAutoplay();
@@ -193,9 +215,9 @@ public class LevelManager : MonoBehaviour
             currentIndex = paths[0].Length - 1;
         }
 
-        foreach (Frog frog in frogs)
+        for (int i = 0; i < frogs.Count; i++)
         {
-            frog.JumpToPetal(allPetals[currentIndex]);
+            frogs[i].JumpToPetal(allPetals[paths[i][currentIndex]]);
         }
 
         // Play music
@@ -237,11 +259,15 @@ public class LevelManager : MonoBehaviour
 
     public void StartAutoplay()
     {
+        AudioManager._instance.StopAllCoroutines();
+
+        playButtonImage.sprite = stopImage;
         isPlayingSequence = true;
         AutoForward(); // This will cause bugs with double play, need check in AudioManager if AskForBlblbl pending (only forward if not)
     }
     public void StopAutoplay()
     {
+        playButtonImage.sprite = playImage;
         isPlayingSequence = false;
         AudioManager._instance.StopAllSources();
     }
@@ -272,5 +298,15 @@ public class LevelManager : MonoBehaviour
         frogs.Add(prince);
 
         // Show next level button instead of control panel
+    }
+
+    public void TogglePlaybackPanel(bool toggle)
+    {
+        playbackPanel.SetActive(toggle);
+    }
+
+    public void ToggleNextLevelPanel(bool toggle)
+    {
+        nextLevelPanel.SetActive(toggle);
     }
 }
