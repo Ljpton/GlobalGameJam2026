@@ -1,81 +1,123 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class Frog : MonoBehaviour
 {
     public float jumpHeight = 3.0f;
     public float duration = 0.75f;
 
-    private Transform[] majorPetals;
-    private Transform[] minorPetals;
-    
-    private int[] path;
-    private int currentPathIndex = 0;
+    private int currentStep = 0;
     private bool isJumping = false;
 
-    public bool IsJumping => isJumping;
+    private Transform lastPos;
 
-    public void Initialize(int[] assignedPath, Transform[] major, Transform[] minor)
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+
+    public Sprite princeSprite;
+    public Sprite notPrinceSprite;
+    public Sprite idleSprite;
+    public Sprite jumpingSprite;
+
+    private void Awake()
     {
-        path = assignedPath;
-        majorPetals = major;
-        minorPetals = minor;
-        currentPathIndex = 0;
-
-        if (path != null && path.Length > 0)
-        {
-            Transform startPetal = GetPetalTransform(path[0]);
-            if (startPetal != null)
-            {
-                transform.position = startPetal.position;
-            }
-        }
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private Transform GetPetalTransform(int noteIndex)
+    void Update()
     {
-        if (noteIndex >= 12)
+
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("Frog clicked!");
+
+        lastPos = transform;
+        spriteRenderer.sprite = idleSprite;
+
+        LevelManager.Instance.StopAutoplay();
+
+        StopAllCoroutines(); // Stop jumping stuff
+        isJumping = false;
+
+        // Play reveal animation
+        animator.enabled = true;
+        animator.SetBool("Reveal", true);
+
+        Invoke(nameof(RevealSound), 3);
+    }
+
+    private void RevealSound()
+    {
+        // Play kissing sound
+
+        Invoke(nameof(RevealImage), 1);
+    }
+
+    private void RevealImage()
+    {
+        if (gameObject.CompareTag("Prince"))
         {
-            int minorIndex = noteIndex - 12;
-            if (minorPetals != null && minorIndex < minorPetals.Length)
-            {
-                return minorPetals[minorIndex];
-            }
+            Debug.Log("You won!");
+
+            spriteRenderer.sprite = princeSprite;
+
+            // Play full song and then finish level
         }
         else
         {
-            if (majorPetals != null && noteIndex < majorPetals.Length)
-            {
-                return majorPetals[noteIndex];
-            }
+            Debug.Log("Wrong frog :(");
+            // Play frog sound
+            // Or turn into random sprite
+
+            Invoke(nameof(RevealEnd), 2);
         }
-        return null;
     }
 
-    public void JumpToPetal(int pathIndex)
+    private void RevealEnd()
     {
-        if (isJumping || path == null) return;
+        animator.SetBool("Reveal", false);
+        animator.enabled = false;
 
-        int fromNoteIndex = path[currentPathIndex];
-        currentPathIndex = pathIndex;
-        int toNoteIndex = path[currentPathIndex];
+        transform.position = lastPos.position;
 
-        Transform fromPetal = GetPetalTransform(fromNoteIndex);
-        Transform toPetal = GetPetalTransform(toNoteIndex);
+        LevelManager.Instance.StartAutoplay(); // For now
+    }
 
-        if (fromPetal != null && toPetal != null)
+    public void TeleportToPetal(Transform target)
+    {
+        transform.position = target.position;
+    }
+
+    public void JumpToPetal(Transform target)
+    {
+        if(isJumping)
         {
-            StartCoroutine(JumpInArc(fromPetal.position, toPetal.position));
+            Debug.Log("Jump call was ignored because frog is already jumping.");
+            return;
         }
+
+        Debug.Log(target.name + "aaaa");
+
+        StartCoroutine(JumpInArc(transform.position, target.position));
     }
 
     IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
     {
         isJumping = true;
+        if(spriteRenderer != null)
+        {
+            spriteRenderer.sprite = jumpingSprite;
+        }
+        
         float time = 0;
 
-        float rotationDirection = endPos.x < startPos.x ? 1f : -1f;
-        Quaternion startRotation = transform.rotation;
+        // float rotationDirection = endPos.x < startPos.x ? 1f : -1f;
+        // Quaternion startRotation = transform.rotation;
         Vector3 originalScale = transform.localScale;
 
         while (time < duration)
@@ -86,12 +128,12 @@ public class Frog : MonoBehaviour
             Vector3 currentPos = Vector3.Lerp(startPos, endPos, linearT);
             currentPos.y += Mathf.Sin(linearT * Mathf.PI) * jumpHeight;
 
-            float spinT = Mathf.Pow(linearT, 0.6f);
-            float angle = spinT * 720f * rotationDirection;
-            float wobble = Mathf.Sin(linearT * Mathf.PI * 6f) * 15f * (1f - linearT);
-            transform.rotation = startRotation * Quaternion.Euler(0, 0, angle + wobble);
+            // float spinT = Mathf.Pow(linearT, 0.6f);
+            // float angle = spinT * 720f * rotationDirection;
+            // float wobble = Mathf.Sin(linearT * Mathf.PI * 6f) * 15f * (1f - linearT);
+            // transform.rotation = startRotation * Quaternion.Euler(0, 0, angle + wobble);
 
-            float squashStretch;
+            /*float squashStretch;
             if (linearT < 0.15f)
             {
                 float t = linearT / 0.15f;
@@ -117,15 +159,19 @@ public class Frog : MonoBehaviour
                 originalScale.x / squashStretch,
                 originalScale.y * squashStretch,
                 originalScale.z
-            );
+            );*/
 
             transform.position = currentPos;
             yield return null;
         }
 
         transform.position = endPos;
-        transform.rotation = startRotation;
+        // transform.rotation = startRotation;
         transform.localScale = originalScale;
         isJumping = false;
+        if(spriteRenderer != null)
+        {
+            spriteRenderer.sprite = idleSprite;
+        }
     }
 }
