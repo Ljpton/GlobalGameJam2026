@@ -35,4 +35,9 @@ public class Menu : MonoBehaviour
     {
         howToPlayPanel.SetActive(false);
     }
+
+    public void StartMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

@@ -54,8 +54,6 @@ public class LevelManager : MonoBehaviour
 
         mixedPetalIndices.AddRange(majPetalIndices);
         mixedPetalIndices.AddRange(minPetalIndices);
-
-        InitLevel();
     }
 
     public void LoadLevel(LevelData level)
@@ -65,6 +63,8 @@ public class LevelManager : MonoBehaviour
 
     public void InitLevel()
     {
+        ClearLevel();
+
         levelWon = false;
         nextLevelPanel.SetActive(false);
         playbackPanel.SetActive(true);
