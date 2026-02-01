@@ -90,7 +90,14 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        LevelManager.Instance.AskForNextStep();
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.AskForNextStep();
+        }
+        else if (SandboxManager.Instance != null)
+        {
+            SandboxManager.Instance.AskForNextStep();
+        }
     }
 
     private IEnumerator WaitUntilSongClipEnd()
@@ -100,7 +107,14 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        LevelManager.Instance.AskForNextStep();
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.AskForNextStep();
+        }
+        else if (SandboxManager.Instance != null)
+        {
+            SandboxManager.Instance.AskForNextStep();
+        }
     }
 
     public void PlaySingle(Notes id, Difficulties difficulty)
@@ -116,6 +130,7 @@ public class AudioManager : MonoBehaviour
             case Difficulties.MINOR:
                 musicSource.PlayOneShot(guitar_minor_singleChord[((int)id - 12)], MusicVolume);
                 break;
+
             case Difficulties.MIXED:
                 if ((int)id >= 12)
                 {
