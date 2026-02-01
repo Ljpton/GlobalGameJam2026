@@ -46,8 +46,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySequence(Notes id, Difficulties difficulty)
     {
-        Debug.Log("Playing Sequence");
-
         switch (difficulty)
         {
             case Difficulties.SINGLE:
@@ -71,19 +69,26 @@ public class AudioManager : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(WaitUntilClipEnd());
-        
+        StartCoroutine(WaitUntilClipEnd());        
     }
 
     private IEnumerator WaitUntilClipEnd()
     {
         while (musicSource.isPlaying)
         {
-            Debug.Log("Waiting");
             yield return null;
         }
 
-        Debug.Log("Ask for next step");
+        LevelManager.Instance.AskForNextStep();
+    }
+
+    private IEnumerator WaitUntilSongClipEnd()
+    {
+        while (percussionSource.isPlaying)
+        {
+            yield return null;
+        }
+
         LevelManager.Instance.AskForNextStep();
     }
 
@@ -151,5 +156,16 @@ public class AudioManager : MonoBehaviour
                 }
                 break;
         }
+
+        StartCoroutine(WaitUntilSongClipEnd());
+    }
+
+    public void StopAllSources()
+    {
+        musicSource.Stop();
+        percussionSource.Stop();
+        bassSource.Stop();
+        guitarSource.Stop();
+        strummingSource.Stop();
     }
 }

@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public Transform[] allPetals;
 
     public LevelData currentLevel;
+    public bool levelWon = false;
 
     private List<Frog> frogs = new();
     private List<int[]> paths = new();
@@ -56,6 +57,8 @@ public class LevelManager : MonoBehaviour
 
     public void InitLevel()
     {
+        levelWon = false;
+
         // Show petal corresponding petals (major, minor)
         majorPetals.SetActive(false);
         minorPetals.SetActive(false);
@@ -151,17 +154,18 @@ public class LevelManager : MonoBehaviour
         }
 
         isPlayingSequence = true;
-        Forward();
+        StartAutoplay();
     }
 
-    public void Forward()
+    public void AutoForward()
     {
+        if (!isPlayingSequence) return;
+
         currentIndex += 1;
         if(currentIndex >= paths[0].Length)
         {
             currentIndex = 0;
         }
-
 
         for(int i = 0; i < frogs.Count; i++)
         {
@@ -169,11 +173,20 @@ public class LevelManager : MonoBehaviour
         }
 
         // Play music
-        AudioManager._instance.PlaySequence(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
+        if(levelWon)
+        {
+            AudioManager._instance.PlaySong(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
+        }
+        else
+        {
+            AudioManager._instance.PlaySequence(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
+        }
     }
 
     public void Backward()
     {
+        StopAutoplay();
+
         currentIndex -= 1;
         if (currentIndex < 0)
         {
@@ -184,6 +197,29 @@ public class LevelManager : MonoBehaviour
         {
             frog.JumpToPetal(allPetals[currentIndex]);
         }
+
+        // Play music
+        AudioManager._instance.PlaySequence(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
+    }
+
+    public void Forward()
+    {
+        StopAutoplay();
+
+        currentIndex += 1;
+        if (currentIndex >= paths[0].Length)
+        {
+            currentIndex = 0;
+        }
+
+
+        for (int i = 0; i < frogs.Count; i++)
+        {
+            frogs[i].JumpToPetal(allPetals[paths[i][currentIndex]]);
+        }
+
+        // Play music
+        AudioManager._instance.PlaySequence(currentLevel.notes[currentIndex], currentLevel.levelDifficulty);
     }
 
     public void ClearLevel()
@@ -202,18 +238,39 @@ public class LevelManager : MonoBehaviour
     public void StartAutoplay()
     {
         isPlayingSequence = true;
-        Forward(); // This will cause bugs with double play, need check in AudioManager if AskForBlblbl pending (only forward if not)
+        AutoForward(); // This will cause bugs with double play, need check in AudioManager if AskForBlblbl pending (only forward if not)
     }
     public void StopAutoplay()
     {
         isPlayingSequence = false;
+        AudioManager._instance.StopAllSources();
     }
 
     public void AskForNextStep()
     {
         if(isPlayingSequence)
         {
-            Forward();
+            AutoForward();
         }
+    }
+
+    public void OnLevelWon()
+    {
+        levelWon = true;
+
+        Frog prince = frogs[0];
+
+        foreach (Frog frog in frogs)
+        {
+            if (!frog.CompareTag("Prince"))
+            {
+                Destroy(frog.gameObject);
+            }
+        }
+
+        frogs.Clear();
+        frogs.Add(prince);
+
+        // Show next level button instead of control panel
     }
 }

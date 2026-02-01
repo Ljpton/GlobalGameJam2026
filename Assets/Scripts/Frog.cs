@@ -12,6 +12,7 @@ public class Frog : MonoBehaviour
     private bool isJumping = false;
 
     private Transform lastPos;
+    Color lastColor;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -34,9 +35,12 @@ public class Frog : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (LevelManager.Instance.levelWon) return;
+
         Debug.Log("Frog clicked!");
 
         lastPos = transform;
+        lastColor = spriteRenderer.color;
         spriteRenderer.sprite = idleSprite;
 
         LevelManager.Instance.StopAutoplay();
@@ -45,26 +49,24 @@ public class Frog : MonoBehaviour
         isJumping = false;
 
         // Play reveal animation
-        animator.enabled = true;
-        animator.SetBool("Reveal", true);
+        transform.position = Vector3.zero;
+        transform.localScale = new Vector3(2, 2, 2);
 
-        Invoke(nameof(RevealSound), 3);
+        Invoke(nameof(RevealStart), 2);
     }
 
-    private void RevealSound()
+    private void RevealStart()
     {
-        // Play kissing sound
-
-        Invoke(nameof(RevealImage), 1);
-    }
-
-    private void RevealImage()
-    {
-        if (gameObject.CompareTag("Prince"))
+        if (CompareTag("Prince"))
         {
             Debug.Log("You won!");
 
             spriteRenderer.sprite = princeSprite;
+            spriteRenderer.color = Color.white;
+            idleSprite = princeSprite;
+            jumpingSprite = princeSprite;
+
+            LevelManager.Instance.OnLevelWon();
 
             // Play full song and then finish level
         }
@@ -73,17 +75,20 @@ public class Frog : MonoBehaviour
             Debug.Log("Wrong frog :(");
             // Play frog sound
             // Or turn into random sprite
-
-            Invoke(nameof(RevealEnd), 2);
         }
+
+        Invoke(nameof(RevealEnd), 2);
     }
 
     private void RevealEnd()
     {
-        animator.SetBool("Reveal", false);
-        animator.enabled = false;
-
         transform.position = lastPos.position;
+        transform.localScale = Vector3.one;
+
+        if(!CompareTag("Prince"))
+        {
+            spriteRenderer.color = lastColor;
+        }
 
         LevelManager.Instance.StartAutoplay(); // For now
     }
@@ -101,24 +106,19 @@ public class Frog : MonoBehaviour
             return;
         }
 
-        Debug.Log(target.name + "aaaa");
-
         StartCoroutine(JumpInArc(transform.position, target.position));
     }
 
     IEnumerator JumpInArc(Vector3 startPos, Vector3 endPos)
     {
         isJumping = true;
+
         if(spriteRenderer != null)
         {
             spriteRenderer.sprite = jumpingSprite;
         }
         
         float time = 0;
-
-        // float rotationDirection = endPos.x < startPos.x ? 1f : -1f;
-        // Quaternion startRotation = transform.rotation;
-        Vector3 originalScale = transform.localScale;
 
         while (time < duration)
         {
@@ -128,47 +128,13 @@ public class Frog : MonoBehaviour
             Vector3 currentPos = Vector3.Lerp(startPos, endPos, linearT);
             currentPos.y += Mathf.Sin(linearT * Mathf.PI) * jumpHeight;
 
-            // float spinT = Mathf.Pow(linearT, 0.6f);
-            // float angle = spinT * 720f * rotationDirection;
-            // float wobble = Mathf.Sin(linearT * Mathf.PI * 6f) * 15f * (1f - linearT);
-            // transform.rotation = startRotation * Quaternion.Euler(0, 0, angle + wobble);
-
-            /*float squashStretch;
-            if (linearT < 0.15f)
-            {
-                float t = linearT / 0.15f;
-                squashStretch = Mathf.Lerp(1f, 0.5f, t);
-            }
-            else if (linearT < 0.5f)
-            {
-                float t = (linearT - 0.15f) / 0.35f;
-                squashStretch = Mathf.Lerp(0.5f, 1.4f, t);
-            }
-            else if (linearT < 0.85f)
-            {
-                float t = (linearT - 0.5f) / 0.35f;
-                squashStretch = Mathf.Lerp(1.4f, 0.6f, t);
-            }
-            else
-            {
-                float t = (linearT - 0.85f) / 0.15f;
-                squashStretch = Mathf.Lerp(0.6f, 1f, t);
-            }
-
-            transform.localScale = new Vector3(
-                originalScale.x / squashStretch,
-                originalScale.y * squashStretch,
-                originalScale.z
-            );*/
-
             transform.position = currentPos;
             yield return null;
         }
 
         transform.position = endPos;
-        // transform.rotation = startRotation;
-        transform.localScale = originalScale;
         isJumping = false;
+
         if(spriteRenderer != null)
         {
             spriteRenderer.sprite = idleSprite;

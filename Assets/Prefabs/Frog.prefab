@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2858744829622406728}
   m_Layer: 0
   m_Name: Frog
-  m_TagString: Prince
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,12 +84,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9175439324669883218, guid: 9fab1b6dbb97c6d45943377eebf949d8, type: 3}
-  m_Color: {r: 0.14964217, g: 0.735849, b: 0.08746881, a: 1}
+  m_Sprite: {fileID: 1874717902785127908, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
+  m_Color: {r: 0.3764706, g: 0.9490196, b: 0.2, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.47, y: 3.55}
+  m_Size: {x: 1.5, y: 1.625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -108,10 +108,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArcJump
   jumpHeight: 3
   duration: 0.75
-  princeSprite: {fileID: -9175439324669883218, guid: 9fab1b6dbb97c6d45943377eebf949d8, type: 3}
-  notPrinceSprite: {fileID: -9175439324669883218, guid: 9fab1b6dbb97c6d45943377eebf949d8, type: 3}
-  idleSprite: {fileID: -9175439324669883218, guid: 9fab1b6dbb97c6d45943377eebf949d8, type: 3}
-  jumpingSprite: {fileID: 1375329206953444646, guid: 9fab1b6dbb97c6d45943377eebf949d8, type: 3}
+  princeSprite: {fileID: 21300000, guid: 50fffc58caebd8b4eb6fa497c49ab3a1, type: 3}
+  notPrinceSprite: {fileID: 1874717902785127908, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
+  idleSprite: {fileID: 1874717902785127908, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
+  jumpingSprite: {fileID: 5393027540581306495, guid: 777c689a7030eed4fa77280d0beea6dd, type: 3}
 --- !u!95 &3300066303932403570
 Animator:
   serializedVersion: 7
