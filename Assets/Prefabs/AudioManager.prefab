@@ -954,7 +954,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d0d0c68198e529d4ead0a24809c9cc6b, type: 3}
   - {fileID: 8300000, guid: 89124fcd27ac1fc43866ebb6cf381e58, type: 3}
   - {fileID: 8300000, guid: 3bb232ea2b12fff4eb891905ea161f1d, type: 3}
-  percussion: {fileID: 8300000, guid: 368910342fd442148aa485a65979a5c2, type: 3}
+  percussion:
+  - {fileID: 8300000, guid: 3e648134c35585c49b4d88a797c47a56, type: 3}
+  - {fileID: 8300000, guid: 6ae2a506eb3d8834da65d6d20bcfd68b, type: 3}
   bass_singleNote:
   - {fileID: 8300000, guid: b4f35254be3ba624b9259d8e506ab639, type: 3}
   - {fileID: 8300000, guid: 15b487782d963334aa8ff8393d426dba, type: 3}
