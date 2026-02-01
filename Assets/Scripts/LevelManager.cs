@@ -65,6 +65,8 @@ public class LevelManager : MonoBehaviour
     {
         ClearLevel();
 
+        currentIndex = currentLevel.notes.Length - 1; // Start on last note, so first note to jump to is the first note
+
         levelWon = false;
         nextLevelPanel.SetActive(false);
         playbackPanel.SetActive(true);
@@ -129,11 +131,6 @@ public class LevelManager : MonoBehaviour
                 {
                     viablePetalsToJumpOnPerStep.Remove(paths[k][j]); // Remove petal which other frog already choose at this step
                 }
-
-                //if (j > 0)
-                //{
-                //    viablePetalsToJumpOnPerStep.Remove(paths[i][j - 1]); // Remove current petal from viable list
-                //}
 
                 Debug.Log("Viable Petals Count After: " + viablePetalsToJumpOnPerStep.Count);
                 
@@ -255,6 +252,9 @@ public class LevelManager : MonoBehaviour
         paths.Clear();
 
         currentIndex = 0;
+
+        AudioManager._instance.StopAllSources();
+        AudioManager._instance.StopAllCoroutines();
     }
 
     public void StartAutoplay()
