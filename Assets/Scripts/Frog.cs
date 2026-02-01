@@ -36,8 +36,6 @@ public class Frog : MonoBehaviour
     {
         if (LevelManager.Instance.levelWon) return;
 
-        Debug.Log("Frog clicked!");
-
         LevelManager.Instance.TogglePlaybackPanel(false);
 
         lastPos = transform;
