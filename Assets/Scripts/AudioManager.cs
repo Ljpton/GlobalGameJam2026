@@ -18,9 +18,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] guitar_major_ChordProgression;
     [SerializeField] private AudioClip[] guitar_minor_singleChord;
     [SerializeField] private AudioClip[] guitar_minor_ChordProgression;
-    
+    [Header("Rhythm Samples")]
     [SerializeField] private AudioClip[] percussion;
     [SerializeField] private AudioClip[] bass_singleNote;
+
+    [Header("SFX Clips")] 
+    [SerializeField] private AudioClip[] prince_win;
+    [SerializeField] private AudioClip[] frog_lose;
+    [SerializeField] private AudioClip ambience;
+    
     
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
@@ -29,6 +35,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource guitarSource;
     [SerializeField] private AudioSource strummingSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource ambienceSource;
 
     [Header("Mixing")]
     [SerializeField] private float SFXVolume;
@@ -47,6 +54,12 @@ public class AudioManager : MonoBehaviour
     {
         
     }*/
+
+    private void Start()
+    {
+        StopAmbience();
+        PlayAmbience();
+    }
 
     public void PlaySequence(Notes id, Difficulties difficulty)
     {
@@ -203,6 +216,34 @@ public class AudioManager : MonoBehaviour
         {
             percussionSource.PlayOneShot(percussion[1], MusicVolume);
             firstPercussionActive = true;
+        }
+    }
+
+    public void PlayPrinceWin()
+    {
+        int rand = Random.Range(0, prince_win.Length);
+        sfxSource.PlayOneShot(prince_win[rand], SFXVolume);
+    }
+
+    public void PlayFrogLose()
+    {
+        int rand = Random.Range(0, frog_lose.Length);
+        sfxSource.PlayOneShot(frog_lose[rand], SFXVolume);
+    }
+
+    public void PlayAmbience()
+    {
+        ambienceSource.clip = ambience;
+        ambienceSource.volume = SFXVolume;
+        ambienceSource.Play();
+    }
+
+    public void StopAmbience()
+    {
+        if (ambienceSource.isPlaying)
+        {
+            ambienceSource.Stop();
+            
         }
     }
 }
