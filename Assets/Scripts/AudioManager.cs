@@ -49,12 +49,6 @@ public class AudioManager : MonoBehaviour
         _instance = this;
     }
 
-
-    /*public static void PlaySFX()
-    {
-        
-    }*/
-
     private void Start()
     {
         StopAmbience();
@@ -182,7 +176,16 @@ public class AudioManager : MonoBehaviour
                 {
                     guitarSource.PlayOneShot(guitar_minor_singleChord[((int)id - 12)], MusicVolume);
                     strummingSource.PlayOneShot(guitar_minor_ChordProgression[((int)id - 12)], MusicVolume);
-                    bassSource.PlayOneShot(bass_singleNote[((int)id - 12)], MusicVolume);
+                    
+                    if((int)id >= 21)
+                    {
+                        bassSource.PlayOneShot(bass_singleNote[((int)id - 21)], MusicVolume); // -21 bcs bass has only single notes and needs to transpose from C to A
+
+                    }
+                    else
+                    {
+                        bassSource.PlayOneShot(bass_singleNote[((int)id - 9)], MusicVolume); // -9 bcs bass has only single notes and needs to transpose from C to A
+                    }
                 }
                 else
                 {

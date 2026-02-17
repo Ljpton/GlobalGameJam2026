@@ -878,9 +878,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c549e5c0fc7d3c04c8e195a57d5fe606, type: 3}
   - {fileID: 8300000, guid: dd4897a94f2766a478c87fb417071d00, type: 3}
   piano_minor_singleChord:
-  - {fileID: 8300000, guid: ce0788604fac2234b9f3846ab8e3e36a, type: 3}
-  - {fileID: 8300000, guid: b085a6f9b52b8d84cb04b340353482d6, type: 3}
-  - {fileID: 8300000, guid: 64cfa7ad55b436243bb27986690b91d2, type: 3}
   - {fileID: 8300000, guid: ead2136e29561b54ba6d94cebd06d97b, type: 3}
   - {fileID: 8300000, guid: fdadeed63b87c8d45a74495f45e8c090, type: 3}
   - {fileID: 8300000, guid: 7da1361ef23c3b340881ab03fa7d05b9, type: 3}
@@ -890,10 +887,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 43e15761a72e9eb45aa7fee765ba3b8f, type: 3}
   - {fileID: 8300000, guid: fd289f5991c8b214e868143c31c6d5c7, type: 3}
   - {fileID: 8300000, guid: a6e5d25cb6e5d254e9c2f468b6a0b6c5, type: 3}
+  - {fileID: 8300000, guid: ce0788604fac2234b9f3846ab8e3e36a, type: 3}
+  - {fileID: 8300000, guid: b085a6f9b52b8d84cb04b340353482d6, type: 3}
+  - {fileID: 8300000, guid: 64cfa7ad55b436243bb27986690b91d2, type: 3}
   piano_minor_ChordProgression:
-  - {fileID: 8300000, guid: 732416646f27531458d0f24ef1f43c2c, type: 3}
-  - {fileID: 8300000, guid: 4ac7bcb47c28445449446323925d36f9, type: 3}
-  - {fileID: 8300000, guid: 28505e5b2b613b44582932d6ebfaabb6, type: 3}
   - {fileID: 8300000, guid: 762c38ba4d433504dae958094b067059, type: 3}
   - {fileID: 8300000, guid: 77b29e8020d00c1408dcc6eedb6cb159, type: 3}
   - {fileID: 8300000, guid: 43ef778ba841b1649af62649e4b5edc9, type: 3}
@@ -903,6 +900,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8f2d05612af53824e91a24226d4e9384, type: 3}
   - {fileID: 8300000, guid: 1b50791c993b2154f8078061e06059e6, type: 3}
   - {fileID: 8300000, guid: a078b73e28e46294fbeee65a43d64f37, type: 3}
+  - {fileID: 8300000, guid: 732416646f27531458d0f24ef1f43c2c, type: 3}
+  - {fileID: 8300000, guid: 4ac7bcb47c28445449446323925d36f9, type: 3}
+  - {fileID: 8300000, guid: 28505e5b2b613b44582932d6ebfaabb6, type: 3}
   guitar_singleNote:
   - {fileID: 8300000, guid: 7e7a657aa29c55b4ba83de89f213ba71, type: 3}
   - {fileID: 8300000, guid: df8d05003b168dc48bd4864fac882cba, type: 3}
@@ -956,9 +956,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e5d04add5da64054e93af54aeba75ef5, type: 3}
   - {fileID: 8300000, guid: 9bf155efef6e1b347b3d6e12072313bf, type: 3}
   guitar_minor_singleChord:
-  - {fileID: 8300000, guid: 4114f2f67b3ec3844a977bc7bf22215f, type: 3}
-  - {fileID: 8300000, guid: 7da8ca42b9cc49e4e9e465d7a8b6fbbd, type: 3}
-  - {fileID: 8300000, guid: e4ad76ae0f6729d4bb270007ccedcce8, type: 3}
   - {fileID: 8300000, guid: fb080079f641cf546b12b6999ff2caff, type: 3}
   - {fileID: 8300000, guid: 0a781c6c8c25684468d25c2eebc7a1ff, type: 3}
   - {fileID: 8300000, guid: faa47031df2075c4780b4900189f974a, type: 3}
@@ -968,10 +965,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b0a02441ec3b92f489a7dccc59f59fab, type: 3}
   - {fileID: 8300000, guid: d5e410ced979b6f49a1f52148260ecad, type: 3}
   - {fileID: 8300000, guid: cef110ef4c3faa44fa8f2a38fa61138b, type: 3}
+  - {fileID: 8300000, guid: 4114f2f67b3ec3844a977bc7bf22215f, type: 3}
+  - {fileID: 8300000, guid: 7da8ca42b9cc49e4e9e465d7a8b6fbbd, type: 3}
+  - {fileID: 8300000, guid: e4ad76ae0f6729d4bb270007ccedcce8, type: 3}
   guitar_minor_ChordProgression:
-  - {fileID: 8300000, guid: a481a36066731394082758ad2d14bd6a, type: 3}
-  - {fileID: 8300000, guid: f16466846f158df4082009a60ae8802d, type: 3}
-  - {fileID: 8300000, guid: 6f2ac0a88acd91644808017cadd7be0c, type: 3}
   - {fileID: 8300000, guid: 8e4bf33d503e0b64eb8988e114982259, type: 3}
   - {fileID: 8300000, guid: f7a1cc84c023d434fa2a11c95bce0bdd, type: 3}
   - {fileID: 8300000, guid: f722fa3569e7f5e4eab5d581376ddaa6, type: 3}
@@ -981,6 +978,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d0d0c68198e529d4ead0a24809c9cc6b, type: 3}
   - {fileID: 8300000, guid: 89124fcd27ac1fc43866ebb6cf381e58, type: 3}
   - {fileID: 8300000, guid: 3bb232ea2b12fff4eb891905ea161f1d, type: 3}
+  - {fileID: 8300000, guid: a481a36066731394082758ad2d14bd6a, type: 3}
+  - {fileID: 8300000, guid: f16466846f158df4082009a60ae8802d, type: 3}
+  - {fileID: 8300000, guid: 6f2ac0a88acd91644808017cadd7be0c, type: 3}
   percussion:
   - {fileID: 8300000, guid: 3e648134c35585c49b4d88a797c47a56, type: 3}
   - {fileID: 8300000, guid: 6ae2a506eb3d8834da65d6d20bcfd68b, type: 3}
